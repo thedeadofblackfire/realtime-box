@@ -10,7 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty32"
+  # ubuntu/trusty64 Official Ubuntu Server 14.04 LTS (Trusty Tahr) builds
+  config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "centrifuge-box"
 
   config.vm.provision :shell, path: "bootstrap.sh"
@@ -44,10 +45,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-    config.vm.provider "virtualbox" do |vb|   
+  #  config.vm.provider "virtualbox" do |vb|   
   #   # Use VBoxManage to customize the VM. For example to change memory:
-     vb.customize ["modifyvm", :id, "--memory", "1024"]
-    end
+  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
+  #  end
   #
 
 end
