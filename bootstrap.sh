@@ -12,7 +12,7 @@ cd /home/src
 git clone https://github.com/centrifugal/centrifuge.git
 cd centrifuge
 python setup.py install 
-rm -r /home/src
+#rm -r /home/src
 
 #cd /home
 #mkdir data
