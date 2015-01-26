@@ -14,6 +14,20 @@ cd centrifuge
 python setup.py install 
 #rm -r /home/src
 
+sudo sed -i -e 's/\r$//' /vagrant/start.sh
+#sudo sed -i -e 's/\r$//' /etc/init.d/centrifuged
+
+sudo cp /vagrant/config/nginx.conf /etc/nginx
+sudo cp /vagrant/config/centrifuge.nginx.conf /etc/nginx/conf.d
+sudo cp /vagrant/config/centrifuged /etc/init.d
+sudo sed -i -e 's/\r$//' /etc/init.d/centrifuged
+sudo chown root:root /etc/init.d/centrifuged
+sudo chmod 0755 /etc/init.d/centrifuged
+
+sudo service centrifuged start
+sudo service nginx restart
+sudo update-rc.d nginx defaults
+
 #cd /home
 #mkdir data
 #sudo chown centrifuge:centrifuge data

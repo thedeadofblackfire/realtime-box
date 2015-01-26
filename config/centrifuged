@@ -1,0 +1,87 @@
+#!/bin/bash
+  
+. /lib/lsb/init-functions
+ 
+USER="root"
+ 
+DAEMON="centrifuge"
+DAEMON_OPT="--log_file_prefix=/vagrant/data/centrifuge.log --config=/vagrant/data/centrifuge.json --port=8000 --path=/vagrant/data/centrifuge.db"
+ROOT_DIR="/vagrant/data"
+ 
+LOG_FILE="$ROOT_DIR/centrifuge.log"
+pidfile="/var/run/centrifuge/centrifuge.pid"
+ 
+LOCK_FILE="/var/lock/subsys/centrifuge"
+ 
+eval_cmd() {
+  local rc=$1
+  if [ $rc -eq 0 ]; then
+    echo '[  OK  ]'
+  else
+    echo '[FAILED]'
+  fi
+  return $rc
+}
+
+do_start()
+{  
+        if [  -f "$LOCK_FILE" ] ; then
+            echo "$DAEMON is already running"
+            RETVAL=1
+        else                
+            echo -n $"Starting $DAEMON: "
+            #daemon $DAEMON $DAEMON_OPT > /dev/null > $LOG_FILE && echo_success || echo_failure   
+            #nohup $DAEMON $DAEMON_OPT >/dev/null 2>&1 &
+            nohup $DAEMON $DAEMON_OPT > /dev/null 2>&1 & return 1
+            #daemon $DAEMON $DAEMON_OPT > /dev/null          
+                RETVAL=$?
+            echo 
+            [ $RETVAL -eq 0 ] && touch $LOCK_FILE       
+            return $RETVAL       
+            #daemon --pidfile $pidfile $DAEMON $DAEMON_OPT >> $LOG_FILE && echo_success || echo_failure
+            #[ $RETVAL -eq 0 ] && touch $LOCK_FILE                
+        fi              
+
+}
+do_stop()
+{
+        echo -n $"Stopping $DAEMON: "
+        #pid=`ps -aefw | grep "$DAEMON $DAEMON_OPT" | grep -v " grep " | awk '{print $2}'`
+        #kill -9 $pid > /dev/null 2>&1 && echo_success || echo_failure
+        killproc $DAEMON
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] && rm -f $LOCK_FILE
+     
+}
+ 
+do_status() {
+  if [ -f "$LOCK_FILE" ] ; then
+    echo "$DAEMON is running"
+  else
+    echo "$DAEMON is stopped"
+  fi
+}
+
+case "$1" in
+        start)
+                do_start
+                ;;
+        stop)
+                do_stop
+                ;;
+        restart)
+                do_stop
+                sleep 1
+                do_start
+                ;;
+        status)
+                do_status                      
+                ;;
+        *)
+                echo "Usage: $0 {start|stop|restart|status}"                              
+                exit 3
+                ;;
+esac
+ 
+exit $RETVAL
