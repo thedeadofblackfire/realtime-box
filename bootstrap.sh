@@ -17,6 +17,9 @@ python setup.py install
 sudo sed -i -e 's/\r$//' /vagrant/start.sh
 #sudo sed -i -e 's/\r$//' /etc/init.d/centrifuged
 
+sudo cp /vagrant/data/centrifuge.db /home/src
+sudo cp /vagrant/data/centrifuge.json /home/src
+
 sudo cp /vagrant/config/nginx.conf /etc/nginx
 sudo cp /vagrant/config/centrifuge.nginx.conf /etc/nginx/conf.d
 sudo cp /vagrant/config/centrifuged /etc/init.d

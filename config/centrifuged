@@ -5,7 +5,8 @@
 USER="root"
  
 DAEMON="centrifuge"
-DAEMON_OPT="--log_file_prefix=/vagrant/data/centrifuge.log --config=/vagrant/data/centrifuge.json --port=8000 --path=/vagrant/data/centrifuge.db"
+DAEMON_OPT="--log_file_prefix=/home/src/centrifuge.log --config=/home/src/centrifuge.json --port=8000 --path=/home/src/centrifuge.db"
+#DAEMON_OPT="--log_file_prefix=/vagrant/data/centrifuge.log --config=/vagrant/data/centrifuge.json --port=8000 --path=/vagrant/data/centrifuge.db"
 ROOT_DIR="/vagrant/data"
  
 LOG_FILE="$ROOT_DIR/centrifuge.log"
