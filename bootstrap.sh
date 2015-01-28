@@ -22,6 +22,7 @@ sudo cp /vagrant/data/centrifuge.json /home/src
 
 sudo cp /vagrant/config/nginx.conf /etc/nginx
 sudo cp /vagrant/config/centrifuge.nginx.conf /etc/nginx/conf.d
+sudo sed -i -e 's/\r$//' /etc/nginx/conf.d/centrifuge.nginx.conf
 sudo cp /vagrant/config/centrifuged /etc/init.d
 sudo sed -i -e 's/\r$//' /etc/init.d/centrifuged
 sudo chown root:root /etc/init.d/centrifuged
